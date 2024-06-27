@@ -1,0 +1,132 @@
+package Collection;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
+public class ProcessManager {
+    private ArrayList<Process> allProcesses;
+    private LinkedList<Process> pendingProcessesHistory;
+    private LinkedList<Process> completedProcessesHistory;
+
+    public ProcessManager() {
+        this.allProcesses = new ArrayList<>();
+        this.pendingProcessesHistory = new LinkedList<>();
+        this.completedProcessesHistory = new LinkedList<>();
+    }
+
+    
+    public void addProcess(Process process) {
+        allProcesses.add(process);
+    }
+
+   
+    public boolean removeProcess(int processId) {
+        for (Process process : allProcesses) {
+            if (process.getProcessId() == processId) {
+                allProcesses.remove(process);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    
+    public Process searchProcess(int processId) {
+        for (Process process : allProcesses) {
+            if (process.getProcessId() == processId) {
+                return process;
+            }
+        }
+        return null;
+    }
+
+    
+    public List<Process> listAllProcesses() {
+        return allProcesses;
+    }
+
+   
+    public boolean updateProcessStatus(int processId, String newStatus) {
+        for (Process process : allProcesses) {
+            if (process.getProcessId() == processId) {
+                process.setStatus(newStatus);
+                return true;
+            }
+        }
+        return false;
+    }
+
+  
+    public void addPendingProcess(Process process) {
+        pendingProcessesHistory.add(process);
+    }
+
+    
+    public void addCompletedProcess(Process process) {
+        completedProcessesHistory.add(process);
+    }
+
+   
+    public List<Process> getPendingProcessesHistory() {
+        return pendingProcessesHistory;
+    }
+
+  
+    public List<Process> getCompletedProcessesHistory() {
+        return completedProcessesHistory;
+    }
+
+	public static void main(String[] args) {
+		
+		 ProcessManager processManager = new ProcessManager();
+
+	        Process process1 = new Process(1, "Bug Report", "Completed");
+	        Process process2 = new Process(2, "Data Create", "Pending");
+	        Process process3 = new Process(3, "Daily Ststus Report", "Running");
+
+	        processManager.addProcess(process1);
+	        processManager.addProcess(process2);
+	        processManager.addProcess(process3);
+
+	        System.out.println("All Processes:");
+	        for (Process process : processManager.listAllProcesses()) {
+	            System.out.println(process);
+	        }
+
+	        System.out.println("Remove Process ID 3:");
+	        processManager.removeProcess(3);
+	        for (Process process : processManager.listAllProcesses()) {
+	            System.out.println(process);
+	        }
+
+	        System.out.println("Searching Process ID 2:");
+	        System.out.println(processManager.searchProcess(2));
+
+	        System.out.println("Update Process Status for ID 1 to 'Pending':");
+	        boolean statusUpdated = processManager.updateProcessStatus(1, "Pending");
+	        System.out.println("Status Updated: " + statusUpdated);
+	        for (Process process : processManager.listAllProcesses()) {
+	            System.out.println(process);
+	        }
+
+	        
+	        System.out.println("Pending Processes History:");
+	        for (Process process : processManager.getPendingProcessesHistory()) {
+	            System.out.println(process);
+	        }
+
+	       
+	        System.out.println("Completed Processes History:");
+	        for (Process process : processManager.getCompletedProcessesHistory()) {
+	            System.out.println(process);
+	        }
+
+	    }
+
+
+	
+		
+	}
+
+
